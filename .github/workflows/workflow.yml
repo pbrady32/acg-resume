@@ -12,8 +12,8 @@ jobs:
       - uses: actions-hub/gcloud@master
         env:
           GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
-          PROJECT_ID: ${{ secrets.GCS_PROJECT }}
+          PROJECT_ID: ihpi-testing
           APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
         with:
-          args: cp -r C:\Users\pgbrady\OneDrive - Michigan Medicine\Documents\Desktop\Cloud Computing\Google Cloud\resume_challenge gs://$GCS_BUCKET/
+          args: cp -r "C:\Users\pgbrady\OneDrive - Michigan Medicine\Documents\Desktop\Cloud Computing\Google Cloud\resume_challenge" gs://$GCS_BUCKET/
           cli: gsutil
