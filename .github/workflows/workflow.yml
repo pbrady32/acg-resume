@@ -16,8 +16,7 @@ jobs:
           PROJECT_ID: ihpi-testing
           APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
         with:
-          args: cp -r . gs://$GCS_BUCKET
+          args: cp -r /content/. gs://$GCS_BUCKET
           cli: gsutil
-          working-directory: ./content
       - run: ls -alh
       - run: pwd
