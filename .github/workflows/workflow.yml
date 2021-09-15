@@ -15,5 +15,5 @@ jobs:
           PROJECT_ID: ihpi-testing
           APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
         with:
-          args: cp -r "C:\Users\pgbrady\OneDrive - Michigan Medicine\Documents\Desktop\Cloud Computing\Google Cloud\resume_challenge\content" gs://$GCS_BUCKET
+          args: cp -r content gs://$GCS_BUCKET
           cli: gsutil
