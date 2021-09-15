@@ -17,6 +17,6 @@ jobs:
           APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
       - run: ls -alh
       - run: pwd
-        # with:
-        #   args: cp -r content gs://$GCS_BUCKET
-        #   cli: gsutil
+        with:
+          args: cp -r content gs://$GCS_BUCKET
+          cli: gsutil
