@@ -2,12 +2,17 @@ on:
   push:
     branches:
     - master
-env:
-  GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
-- uses: actions-hub/gcloud@master
-  env:
-    PROJECT_ID: ${{ secrets.GCS_PROJECT }}
-    APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
-  with:
-    args: rsync -R resume_challenge gs://$GCS_BUCKET/
-    cli: gsutil
+
+jobs:
+  deploy:
+    name: Deploy
+
+    steps:
+      - uses: actions-hub/gcloud@master
+        env:
+          GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
+          PROJECT_ID: ${{ secrets.GCS_PROJECT }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
+        with:
+          args: rsync -R resume_challenge gs://$GCS_BUCKET/
+          cli: gsutil
