@@ -15,5 +15,5 @@ jobs:
           PROJECT_ID: ${{ secrets.GCS_PROJECT }}
           APPLICATION_CREDENTIALS: ${{ secrets.GCS_SA_KEY }}
         with:
-          args: rsync -R resume_challenge gs://$GCS_BUCKET/
+          args: cp -r C:\Users\pgbrady\OneDrive - Michigan Medicine\Documents\Desktop\Cloud Computing\Google Cloud\resume_challenge gs://$GCS_BUCKET/
           cli: gsutil
