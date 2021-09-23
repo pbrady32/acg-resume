@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
+      - name: Checkout the repo files
         uses: actions/checkout@v2
       - name: Upload to GCS
         uses: actions-hub/gcloud@master
@@ -20,7 +20,7 @@ jobs:
         with:
           args: cp -r content/. gs://$GCS_BUCKET
           cli: gsutil
-      - name: Set up Cloud SDK
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
           project_id: ${{ secrets.GCS_PROJECT }}
