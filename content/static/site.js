@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $.ajax({
-        url: "http://api.pgbcloud.com/count"
+        url: "https://api.pgbcloud.com/count"
     }).then(function (data) {
-        $('.views-count').innerHTML(data.count);
+        $('.views-count').html(data.count);
     });
 });
