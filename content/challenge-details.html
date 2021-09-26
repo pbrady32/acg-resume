@@ -42,6 +42,105 @@
     <div class="container body">
         <div class="row">
             <div class="col-9">
+
+                <h2>Google Cloud Challenge Summary</h2>
+                <p>The primary goal for this challenge is to build a personal resume website that incorporates an API
+                    for site visit count tracking deployed using a fully functional CI/CD pipeline. The API itself is
+                    built upon a number of Google Cloud technologies via a <a
+                        href="https://cloud.google.com/kubernetes-engine/docs/tutorials/gitops-cloud-build">Gitops-style
+                        approach</a>. Ideally, the deployment of our API should be fully automated and include basic
+                    unit tests to verify integrity.&nbsp;&nbsp;</p>
+                <p>In this summary, I'll be going over how I built this site (pgbcloud.com) and deployed it to Google
+                    Cloud using Gitops methodology along with container and serverless technology. The specific Google
+                    Cloud services utilized in this challenge include:</p>
+                <ul>
+                    <li>Storage
+                        <ul>
+                            <li>Google Cloud Storage (GCS)&nbsp;(object storage)</li>
+                            <li>Firestore&nbsp;(NoSQL database)</li>
+                        </ul>
+                    </li>
+                    <li>Compute
+                        <ul>
+                            <li>Cloud Run&nbsp;(Serverless container-based compute)</li>
+                        </ul>
+                    </li>
+                    <li>Networking
+                        <ul>
+                            <li>Google Domains</li>
+                            <li>Cloud DNS</li>
+                            <li>Global HTTPS Cloud Load Balancer</li>
+                            <li>Cloud CDN&nbsp;(edge caching)</li>
+                        </ul>
+                    </li>
+                    <li>Source Control<br />
+                        <ul>
+                            <li>Cloud Source Repositories (CSR)</li>
+                        </ul>
+                    </li>
+                    <li>CI/CD<br />
+                        <ul>
+                            <li>Cloud Build</li>
+                            <li>Artifact Registry</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>As you might expect, trying to tie together all of these tools into a cohesive unit is quite a
+                    challenge, so this was a good learning opportunity for me.&nbsp;</p>
+                <p>Before we dive into the specifics, let's take a look at the front- and back-end infrastructure
+                    diagrams.&nbsp;</p>
+                <p>&nbsp;</p>
+                <h2>Run-Time Architecture Overview</h2>
+                <p>The front-end of the site is built using HTML, CSS, and Javascript. Grid layout and basic styling is
+                    provided via the Bootstrap 5 web framework.&nbsp;</p>
+                <p>The site is designed to be a basic online resume and is served as a static asset via Google's Cloud
+                    Storage service. To help improve speed of delivery to end users, the site is cached via Google's
+                    global Content Delivery Network (CDN). With CDN, website content is cached and served close to users
+                    to greatly enhance site load speed.&nbsp;</p>
+                <p>On each load of the home page, a JQuery script is triggered to call our API located at
+                    api.pgbcloud.com to both log and retrieve an updating site visitor count. The count is then
+                    displayed in the right sidebar of the home page.&nbsp;</p>
+                <p>The domain is registered via Google Domains with nameservers pointed to Google Cloud DNS. Google
+                    offers a handy feature that manages your SSL certificates for you to allow HTTPS for your site. This
+                    is set up when creating an HTTPS load balancer, a tool this site uses to direct to help manage
+                    incoming traffic in conjunction with Cloud CDN.&nbsp;</p>
+                <p>In terms of deployment, the website is deployed automatically to Google Cloud Storage using Github
+                    Actions which allows us to automate the process of pushing updated web files directly to GCS.&nbsp;
+                </p>
+                <p>&nbsp;</p>
+                <p>Dev-Time Architecture Overview</p>
+                <p>The primary role of our backend API is to allow our website to record pageload counts. Each load of
+                    the home page triggers a call to our API which then records a new visit in a Firestore
+                    database.&nbsp;</p>
+                <p>As noted in the introduction, I used a Gitops approach to deployment that consists of the following
+                    flow of code from local development to production:</p>
+                <ol>
+                    <li>API code is pushed from local env to Github repo</li>
+                    <li>Github repo is mirrored to Google Cloud Source Repository (CSR)</li>
+                    <li>CSR triggers a Cloud Build pipeline that:
+                        <ol>
+                            <li>Runs unit tests on our app</li>
+                            <li>Builds our app into a container</li>
+                            <li>Pushes the container to our Google Artifact Registry</li>
+                            <li>Clones our CSR repo to a different env repo on the candidate branch&nbsp;- This repo is
+                                not modified by humans</li>
+                        </ol>
+                    </li>
+                </ol>
+                <p>Once our application code has been pushed to the candidate branch of the env CSR repo, we are now
+                    ready to re-deploy our API via Cloud Run using the following steps:</p>
+                <ol>
+                    <li>Finalized set of application deployment files are pushed to a production branch of our env repo
+                    </li>
+                    <li>A trigger is activated to rebuild and deploy our API to Cloud Run. the image is built, pushed to
+                        Container Registry, and deployed on Cloud Run</li>
+                </ol>
+
+
+
+
+
+
                 <p>This is some text for a resume</p>
                 <h3>Experience</h3>
                 <div class="row">
