@@ -89,7 +89,6 @@
                     challenge, so this was a good learning opportunity for me.&nbsp;</p>
                 <p>Before we dive into the specifics, let's take a look at the front- and back-end infrastructure
                     diagrams.&nbsp;</p>
-                <p>&nbsp;</p>
                 <h2>Run-Time Architecture Overview</h2>
                 <p>The front-end of the site is built using HTML, CSS, and Javascript. Grid layout and basic styling is
                     provided via the Bootstrap 5 web framework.&nbsp;</p>
@@ -107,10 +106,9 @@
                 <p>In terms of deployment, the website is deployed automatically to Google Cloud Storage using Github
                     Actions which allows us to automate the process of pushing updated web files directly to GCS.&nbsp;
                 </p>
-                <p>&nbsp;</p>
-                <p>Dev-Time Architecture Overview</p>
-                <p>The primary role of our backend API is to allow our website to record pageload counts. Each load of
-                    the home page triggers a call to our API which then records a new visit in a Firestore
+                <h2>Dev-Time Architecture Overview</h2>
+                <p>The primary role of our backend API is to allow our website to record page load counts. Each load of
+                    the home page triggers a JQuery AJAX call to our API which then records a new visit in a Firestore
                     database.&nbsp;</p>
                 <p>As noted in the introduction, I used a Gitops approach to deployment that consists of the following
                     flow of code from local development to production:</p>
@@ -130,109 +128,103 @@
                 <p>Once our application code has been pushed to the candidate branch of the env CSR repo, we are now
                     ready to re-deploy our API via Cloud Run using the following steps:</p>
                 <ol>
-                    <li>Finalized set of application deployment files are pushed to a production branch of our env repo
-                    </li>
                     <li>A trigger is activated to rebuild and deploy our API to Cloud Run. the image is built, pushed to
                         Container Registry, and deployed on Cloud Run</li>
+                    <li>Finalized set of application deployment files are pushed to a production branch of our env repo
+                    </li>
                 </ol>
+                <p>The reason we use two branches is so we can maintain a record of both successful and failed
+                    deployments. The candidate branch will store versions of code from all attempts to deploy our
+                    updated API, while the production branch stores only those versions of API code that resulted in
+                    successful deployment to Cloud Run.&nbsp;</p>
+                <h2>Key Tradeoffs</h2>
+                <p>I felt that the architecture was well designed for this challenge. There were several parts of the
+                    project that allowed some leeway in terms of implementation choice which was nice to see. For
+                    example, I decided to use GitHub Actions to implement the CI/CD pipeline for my front-end simply as
+                    a learning exercise. I may go back and re-write that piece to use Cloud Build instead just to keep
+                    everything in the Google Cloud ecosystem.&nbsp;</p>
+                <p>You also saw above that we used Firestore as our DB of choice. It's entirely possible to use
+                    something like Cloud SQL, but bear in mind that would require a constantly running instance to keep
+                    the DB alive. Also, it may not be worth setting up a DB to store a single updating
+                    observation.&nbsp;</p>
+                <p>Also of note, this project did not implement <a
+                        href="https://firebase.google.com/docs/firestore/solutions/counters">distributed counters</a>
+                    due to the relatively low traffic I expect to receive...though I'm happy to implement this if my
+                    resume does receive lots of traffic. :)&nbsp;</p>
+                <h2>Next Steps</h2>
+                <p>There are a few things I would like to spend more time on in the coming weeks/months:</p>
+                <ol>
+                    <li>Utilize Terraform to set up the project infrastructure as code</li>
+                    <li>Revisit API to determine if the current Flask implementation is the lowest latency option.
+                        Perhaps something on NodeJS would be faster?</li>
+                    <li>Continue building out the resume site to better handle mobile devices</li>
+                    <li>Work on local dev environment to ensure best practices are being implemented for service account
+                        authentication</li>
+                </ol>
+                <h2>Lessons Learned</h2>
+                <p>Wrapping my head around the Gitops process was probably the trickiest part of this challenge for me.
+                    Everything else seemed fairly straightforward, but I also need to go back and review each step to
+                    ensure I'm using best practices.&nbsp;</p>
+                <p>I learned a lot about Gitops via the various tutorial articles and other documents I found online,
+                    and it's something I plan to implement into my other projects. I really like being able to keep an
+                    accurate record of attempted deployments vs successful deployments.&nbsp;</p>
+                <p>That simple distinguishing split between branches is going to be extremely useful.&nbsp;</p>
+                <p>I really wish I had more time to implement the Terraform code necessary to build this infrastructure.
+                    After the challenge ends, my first goal is going to involve focusing on infrastructure as code and
+                    taking a few courses on proper implementation.&nbsp;</p>
+                <p>I'm excited to keep applying these news skills I've learned. I had never used tools such as Cloud
+                    Build or Cloud Run before this challenge, but knowing that I could get them up and running in a day
+                    or two just by reading the docs has given me a nice confidence boost.&nbsp;</p>
+                <p>Looking forward to learning more!</p>
 
 
 
 
 
-
-                <p>This is some text for a resume</p>
-                <h3>Experience</h3>
-                <div class="row">
-                    <div class="col-3">
-                        <h6>2014-Present</h6>
+                <div class="col sidebar">
+                    <h3>Personal Info</h3>
+                    <div class="row">
+                        <h6>Address</h6>
+                        <p>Home address</p>
                     </div>
-                    <div class="col">
-                        <h6>Manager - IHPI Data & Methods Hub</h6>
-                        <ul>
-                            <li>Did something here</li>
-                            <li>Did another thing here</li>
-                        </ul>
+                    <div class="row">
+                        <h6>Phone</h6>
+                        <p>555-555-5555</p>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <h6>2012-2014</h6>
+                    <div class="row">
+                        <h6>Email</h6>
+                        <p>pgbrady [at] umich.edu</p>
                     </div>
-                    <div class="col">
-                        <h6>Administrative Fellow</h6>
-                        <ul>
-                            <li>Did something here</li>
-                            <li>Did another thing here</li>
-                        </ul>
+                    <div class="row">
+                        <h6>LinkedIn</h6>
+                        <p><a href="https://www.linkedin.com/in/patrick-g-brady">linkedin.com/in/patrick-g-brady</a>
+                        </p>
                     </div>
-                </div>
 
-                <h3>Education</h3>
-                <div class="row">
-                    <div class="col-3">
-                        <h6>2010-2012</h6>
+                    <h3>Technical Skills</h3>
+                    <div class="row">
+                        <h6>Languages</h6>
+                        <p>Python</br>
+                            SQL</br>
+                            HTML</br>
+                            CSS</br>
+                            Javascript</br>
+                        </p>
+
+                        <h6>Cloud Services</h6>
+                        <p>Google Cloud</br>
+                            AWS</br>
+                        </p>
+
+                        <h6>Web Frameworks</h6>
+                        <p>Django</br>
+                            Wordpress
+                        </p>
+
                     </div>
-                    <div class="col">
-                        <h6>MHA - Master of Health Administration</h6>
-                        <p>Emory University School of Public Health</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <h6>2006-2010</h6>
-                    </div>
-                    <div class="col">
-                        <h6>BS - Neuroscience</h6>
-                        <p>University of Michigan</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col sidebar">
-                <h3>Personal Info</h3>
-                <div class="row">
-                    <h6>Address</h6>
-                    <p>Home address</p>
-                </div>
-                <div class="row">
-                    <h6>Phone</h6>
-                    <p>555-555-5555</p>
-                </div>
-                <div class="row">
-                    <h6>Email</h6>
-                    <p>pgbrady [at] umich.edu</p>
-                </div>
-                <div class="row">
-                    <h6>LinkedIn</h6>
-                    <p><a href="https://www.linkedin.com/in/patrick-g-brady">linkedin.com/in/patrick-g-brady</a>
-                    </p>
-                </div>
-
-                <h3>Technical Skills</h3>
-                <div class="row">
-                    <h6>Languages</h6>
-                    <p>Python</br>
-                        SQL</br>
-                        HTML</br>
-                        CSS</br>
-                        Javascript</br>
-                    </p>
-
-                    <h6>Cloud Services</h6>
-                    <p>Google Cloud</br>
-                        AWS</br>
-                    </p>
-
-                    <h6>Web Frameworks</h6>
-                    <p>Django</br>
-                        Wordpress
-                    </p>
-
                 </div>
             </div>
         </div>
-    </div>
 
 
 </body>
