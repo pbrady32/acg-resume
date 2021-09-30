@@ -39,7 +39,6 @@
         <div class="row">
             <div class="col">
 
-                <h2>Google Cloud Challenge Summary</h2>
                 <p>The primary goal for this challenge is to build a personal resume website that incorporates an API
                     for site visit count tracking deployed using a fully functional CI/CD pipeline. The API itself is
                     built upon a number of Google Cloud technologies via a <a
@@ -82,8 +81,11 @@
                     </li>
                 </ul>
                 <p>As you might expect, trying to tie together all of these tools into a cohesive unit is quite a
-                    challenge, so this was a good learning opportunity for me.&nbsp;</p>
-                <p>Before we dive into the specifics, let's take a look at the infrastructure diagram.&nbsp;</p>
+                    task your first time, so this was a good learning opportunity for me.&nbsp;
+                </p>
+                <p>Before we dive into the specifics, let's take a look at the infrastructure diagram. Code for the
+                    front-end <a href="https://github.com/pbrady32/acg-resume">can be found here</a>, and code for the
+                    back-end <a href="https://github.com/pbrady32/acg-resume-api">can be found here.</a></p>
                 <img src="static/images/pgbcloud architecture.png" class="img-fluid"
                     alt="Google Cloud architecture diagram">
                 <h2>Run-Time Architecture Overview</h2>
@@ -93,20 +95,20 @@
                     Storage service. To help improve speed of delivery to end users, the site is cached via Google's
                     global Content Delivery Network (CDN). With CDN, website content is cached and served close to users
                     to greatly enhance site load speed.&nbsp;</p>
-                <p>On each load of the home page, a JQuery script is triggered to call our API located at
+                <p>On each load of the home page, a jQuery script is triggered to call our API located at
                     api.pgbcloud.com to both log and retrieve an updating site visitor count. The count is then
                     displayed in the right sidebar of the home page.&nbsp;</p>
                 <p>The domain is registered via Google Domains with nameservers pointed to Google Cloud DNS. Google
                     offers a handy feature that manages your SSL certificates for you to allow HTTPS for your site. This
-                    is set up when creating an HTTPS load balancer, a tool this site uses to direct to help manage
+                    is set up when creating an HTTPS load balancer, a tool this site uses to help manage
                     incoming traffic in conjunction with Cloud CDN.&nbsp;</p>
                 <p>In terms of deployment, the website is deployed automatically to Google Cloud Storage using Github
                     Actions which allows us to automate the process of pushing updated web files directly to GCS.&nbsp;
                 </p>
                 <h2>Dev-Time Architecture Overview</h2>
                 <p>The primary role of our backend API is to allow our website to record page load counts. Each load of
-                    the home page triggers a JQuery AJAX call to our API which then records a new visit in a Firestore
-                    database.&nbsp;</p>
+                    the home page triggers a jQuery AJAX call to our API which then records a new visit in a Firestore
+                    database and retrieves the current count.</p>
                 <p>As noted in the introduction, I used a Gitops approach to deployment that consists of the following
                     flow of code from local development to production:</p>
                 <ol>
@@ -125,9 +127,9 @@
                 <p>Once our application code has been pushed to the candidate branch of the env CSR repo, we are now
                     ready to re-deploy our API via Cloud Run using the following steps:</p>
                 <ol>
-                    <li>A trigger is activated to rebuild and deploy our API to Cloud Run. the image is built, pushed to
-                        Container Registry, and deployed on Cloud Run</li>
-                    <li>Finalized set of application deployment files are pushed to a production branch of our env repo
+                    <li>A trigger is activated to deploy our API to Cloud Run.</li>
+                    <li>If successful, the finalized set of application deployment files are pushed to a production
+                        branch of our env repo
                     </li>
                 </ol>
                 <p>The reason we use two branches is so we can maintain a record of both successful and failed
@@ -167,13 +169,17 @@
                 <p>I learned a lot about Gitops via the various tutorial articles and other documents I found online,
                     and it's something I plan to implement into my other projects. I really like being able to keep an
                     accurate record of attempted deployments vs successful deployments.&nbsp;</p>
-                <p>That simple distinguishing split between branches is going to be extremely useful.&nbsp;</p>
+                <p>That simple, distinguishing split between branches is going to be extremely useful.&nbsp;</p>
+                <p>
+                    I believe I have some redundant build steps in my deployment that need to get cleaned up, so I'll be
+                    taking care of that soon to make my Gitops CI/CD pipeline more efficient.
+                </p>
                 <p>I really wish I had more time to implement the Terraform code necessary to build this infrastructure.
                     After the challenge ends, my first goal is going to involve focusing on infrastructure as code and
                     taking a few courses on proper implementation.&nbsp;</p>
-                <p>I'm excited to keep applying these news skills I've learned. I had never used tools such as Cloud
+                <p>I'm excited to keep applying these new skills I've learned. I had never used tools such as Cloud
                     Build or Cloud Run before this challenge, but knowing that I could get them up and running in a day
-                    or two just by reading the docs has given me a nice confidence boost.&nbsp;</p>
+                    or two just by reading the docs has given me a nice confidence boost.</p>
                 <p>Looking forward to learning more!</p>
 
 
