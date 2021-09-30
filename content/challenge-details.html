@@ -117,18 +117,19 @@
                     <li>CSR triggers a Cloud Build pipeline that:
                         <ol>
                             <li>Runs unit tests on our app</li>
-                            <li>Builds our app into a container</li>
-                            <li>Pushes the container to our Google Container Registry</li>
                             <li>Clones our CSR repo to a different env repo on the candidate branch&nbsp;- This repo is
                                 not modified by humans</li>
                         </ol>
                     </li>
                 </ol>
                 <p>Once our application code has been pushed to the candidate branch of the env CSR repo, we are now
-                    ready to re-deploy our API via Cloud Run using the following steps:</p>
+                    ready to re-deploy our API via Cloud Run. A Cloud Build trigger is activated via push to the
+                    candidate branch and executes the following steps:</p>
                 <ol>
-                    <li>A trigger is activated to deploy our API to Cloud Run.</li>
-                    <li>If successful, the finalized set of application deployment files are pushed to a production
+                    <li>Builds our app into a container</li>
+                    <li>Pushes the container to our Google Container Registry</li>
+                    <li>Deploys the new app to our Cloud Run service</li>
+                    <li>If successful, the finalized set of application deployment files are pushed to the production
                         branch of our env repo
                     </li>
                 </ol>
