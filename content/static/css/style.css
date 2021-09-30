@@ -6,6 +6,12 @@
 .header__col {
     padding: 1rem;
 }
+/* 
+@media (max-width: 544px) {  
+    .body {
+        font-size: 1.5rem;
+    }
+  } */
 
 .body {
     padding: 1rem;
