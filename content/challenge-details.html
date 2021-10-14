@@ -118,7 +118,8 @@
                     <li>CSR triggers a Cloud Build pipeline that:
                         <ol>
                             <li>Runs unit tests on our app</li>
-                            <li>Clones our CSR repo to a different env repo on the candidate branch&nbsp;- This repo is
+                            <li>Clones our CSR repo to a different production repo on the candidate branch - This repo
+                                is
                                 not modified by humans</li>
                         </ol>
                     </li>
@@ -131,7 +132,7 @@
                     <li>Pushes the container to our Google Container Registry</li>
                     <li>Deploys the new app to our Cloud Run service</li>
                     <li>If successful, the finalized set of application deployment files are pushed to the production
-                        branch of our env repo
+                        branch of our production repo
                     </li>
                 </ol>
                 <p>The reason we use two branches is so we can maintain a record of both successful and failed
